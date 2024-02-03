@@ -1,7 +1,7 @@
 import pygame
 import random
 
-from Leaf import Leaf
+from Heart import Heart
 from Score import Score
 from Wallpaper import Wallpaper
 
@@ -21,9 +21,9 @@ text = Score(str(score))
 pygame.time.set_timer(timer_event, 1000)
 
 # Instances
-leafs = []
+hearts = []
 for _ in range(0, 10):
-  leafs.append(Leaf(random.randint(0, window_width - 50), 0))
+  hearts.append(Heart(random.randint(0, window_width - 50), 0))
 
 running = True
 while running:
@@ -31,13 +31,13 @@ while running:
     if event.type == pygame.QUIT:
       running = False
     elif event.type == pygame.MOUSEBUTTONDOWN:
-      for leaf in leafs:
-        if leaf.rect != '' and leaf.rect.collidepoint(event.pos):
+      for heart in hearts:
+        if heart.rect != '' and heart.rect.collidepoint(event.pos):
           score += 1
-          leafs.remove(leaf)
+          hearts.remove(heart)
           text.update_score(str(score))
     elif event.type == timer_event:
-      leafs.append(Leaf(random.randint(0, window_width - 50), 0))
+      hearts.append(Heart(random.randint(0, window_width - 50), 0))
 
     keys = pygame.key.get_pressed()
     if keys[pygame.K_ESCAPE]:
@@ -55,11 +55,11 @@ while running:
   )
 
   # Drawing
-  for leaf in leafs:
-    leaf.draw(window)
-    leaf.move()
-    if leaf.position_y > window_height - scoreboard_height - 50:
-      leafs.remove(leaf)
+  for heart in hearts:
+    heart.draw(window)
+    heart.move()
+    if heart.position_y > window_height - scoreboard_height - 50:
+      hearts.remove(heart)
       score -= 5
       text.update_score(str(score))
 
